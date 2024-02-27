@@ -136,10 +136,10 @@ const Index = () => {
   return (
     <Container>
       <Heading>
-        Go Moonbaby Travel Pods ::<Span> a nice vacation!</Span>
+        BitMask Wallet ::<Span>Your Gateway to DeepWeb3 on Bitcoin</Span>
       </Heading>
       <Subtitle>
-        Get started by editing <code>src/index.ts</code>
+        Download on the Google Chrome store, or visit us at our <a href='https://beta.bitmask.app' style={{color: 'lime'}}>Bitmask Web Wallet</a>.
       </Subtitle>
       <CardContainer>
         {state.error && (
