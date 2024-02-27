@@ -23,7 +23,10 @@
       "dapps": true,
       "snaps": false
     },
-    "endowment:page-home": true
+    "endowment:page-home": {
+      "dapps": true,
+      "snaps": true
+    }
   },
   "manifestVersion": "0.1"
 }
