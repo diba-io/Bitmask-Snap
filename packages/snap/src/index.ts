@@ -39,6 +39,25 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       console.log("Dialog result", result);
 
       return false;
+    case "create wallet":
+            //return snap.request({
+              const result = await snap.request({
+
+                method: 'snap_dialog',
+                params: {
+                  type: 'confirmation',
+                  content: panel([
+                    text(`Greetings Bitmask User, **${origin}**!`),
+                    text('This custom confirmation is just for display purposes.'),
+                    text('A likely transaction is to first fund your vault.'),
+        
+                    text(
+                      'But you can edit the snap source code to make it do something, if you want to!',
+                    ),
+                  ]),
+                },
+              });
+              console.log("Dialog result", result);
     default:
       throw new Error('Method not found.');
   }

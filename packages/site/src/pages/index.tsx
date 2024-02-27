@@ -7,6 +7,7 @@ import {
   ReconnectButton,
   SendHelloButton,
   Card,
+  CreateWalletButton,
 } from '../components';
 import { defaultSnapOrigin } from '../config';
 import { MetamaskActions, MetaMaskContext } from '../hooks';
@@ -15,6 +16,7 @@ import {
   getSnap,
   isLocalSnap,
   sendHello,
+  createWallet,
   shouldDisplayReconnectButton,
 } from '../utils';
 
@@ -133,6 +135,15 @@ const Index = () => {
     }
   };
 
+  const handleCreateWallet = async () => {
+    try {
+      await createWallet();
+    } catch (error) {
+      console.error(error);
+      dispatch({ type: MetamaskActions.SetError, payload: error });
+    }
+  };
+
   return (
     <Container>
       <Heading>
@@ -197,6 +208,25 @@ const Index = () => {
               'Display a custom message within a confirmation screen in MetaMask.',
             button: (
               <SendHelloButton
+                onClick={handleSendHelloClick}
+                disabled={!state.installedSnap}
+              />
+            ),
+          }}
+          disabled={!state.installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(state.installedSnap) &&
+            !shouldDisplayReconnectButton(state.installedSnap)
+          }
+        />
+                <Card
+          content={{
+            title: 'Create BitMask Wallet',
+            description:
+              'Create wallet',
+            button: (
+              <CreateWalletButton
                 onClick={handleSendHelloClick}
                 disabled={!state.installedSnap}
               />
