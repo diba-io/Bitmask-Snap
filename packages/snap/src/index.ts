@@ -41,7 +41,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       return false;
     case "create wallet":
             //return snap.request({
-              const result = await snap.request({
+              const result_wallet = await snap.request({
 
                 method: 'snap_dialog',
                 params: {
@@ -57,7 +57,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
                   ]),
                 },
               });
-              console.log("Dialog result", result);
+              console.log("Dialog result", result_wallet);
     default:
       throw new Error('Method not found.');
   }
