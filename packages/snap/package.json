@@ -4,13 +4,12 @@
   "description": "The 'Hello, world!' of MetaMask Snaps, now written in TypeScript.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+    "url": "https://github.com/diba-io/Bitmask-Snap/tree/main/packages/snap"
   },
   "license": "(MIT-0 OR Apache-2.0)",
   "main": "./dist/bundle.js",
   "files": [
     "dist/",
-    "images/",
     "snap.manifest.json"
   ],
   "scripts": {
@@ -28,7 +27,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@metamask/snaps-sdk": "^2.0.0",
+    "@metamask/snaps-sdk": "^2.1.0",
     "buffer": "^6.0.3"
   },
   "devDependencies": {
@@ -38,7 +37,7 @@
     "@metamask/eslint-config-jest": "^12.0.0",
     "@metamask/eslint-config-nodejs": "^12.0.0",
     "@metamask/eslint-config-typescript": "^12.0.0",
-    "@metamask/snaps-cli": "^5.0.0",
+    "@metamask/snaps-cli": "^5.1.1",
     "@metamask/snaps-jest": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",
@@ -54,7 +53,6 @@
     "prettier": "^2.7.1",
     "prettier-plugin-packagejson": "^2.2.11",
     "rimraf": "^3.0.2",
-    "through2": "^4.0.2",
     "ts-jest": "^29.1.0",
     "typescript": "^4.7.4"
   },

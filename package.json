@@ -2,14 +2,10 @@
   "name": "root",
   "version": "0.1.0",
   "private": true,
-  "description": "",
-  "homepage": "https://github.com/MetaMask/template-snap-monorepo#readme",
-  "bugs": {
-    "url": "https://github.com/MetaMask/template-snap-monorepo/issues"
-  },
+  "description": "This repository demonstrates how to develop a snap which has a dynamic UI.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MetaMask/template-snap-monorepo.git"
+    "url": "https://github.com/diba-io/Bitmask-Snap"
   },
   "license": "(MIT-0 OR Apache-2.0)",
   "author": "",
@@ -18,7 +14,6 @@
   ],
   "scripts": {
     "build": "yarn workspaces foreach --parallel --topological --verbose run build",
-    "install-chrome": "./scripts/install-chrome.sh",
     "lint": "yarn lint:eslint && yarn lint:misc --check",
     "lint:eslint": "eslint . --cache --ext js,jsx,ts,tsx",
     "lint:fix": "yarn lint:eslint --fix && yarn lint:misc --write",

@@ -1,4 +1,4 @@
-# TypeScript Example Snap Front-end
+# Snap Landing Page
 
 This project was bootstrapped with [Gatsby](https://www.gatsbyjs.com/).
 

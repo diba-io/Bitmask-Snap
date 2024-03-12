@@ -7,6 +7,7 @@ import {
   ReconnectButton,
   SendHelloButton,
   Card,
+  SignMessageButton,
 } from '../components';
 import { defaultSnapOrigin } from '../config';
 import { MetamaskActions, MetaMaskContext } from '../hooks';
@@ -16,6 +17,7 @@ import {
   isLocalSnap,
   sendHello,
   shouldDisplayReconnectButton,
+  signMessage,
 } from '../utils';
 
 const Container = styled.div`
@@ -124,6 +126,15 @@ const Index = () => {
     }
   };
 
+  const handleSignMessageClick = async () => {
+    try {
+      await signMessage();
+    } catch (error) {
+      console.error(error);
+      dispatch({ type: MetamaskActions.SetError, payload: error });
+    }
+  };
+
   const handleSendHelloClick = async () => {
     try {
       await sendHello();
@@ -136,11 +147,8 @@ const Index = () => {
   return (
     <Container>
       <Heading>
-        Go Moonbaby Travel Pods ::<Span> a nice vacation!</Span>
+        Welcome to the <Span>BitMask Wallet Snap</Span>
       </Heading>
-      <Subtitle>
-        Get started by editing <code>src/index.ts</code>
-      </Subtitle>
       <CardContainer>
         {state.error && (
           <ErrorMessage>
@@ -190,6 +198,24 @@ const Index = () => {
             disabled={!state.installedSnap}
           />
         )}
+        <Card
+          content={{
+            title: 'Sign Message',
+            description: 'Display Signature Insights in MetaMask.',
+            button: (
+              <SignMessageButton
+                onClick={handleSignMessageClick}
+                disabled={!state.installedSnap}
+              />
+            ),
+          }}
+          disabled={!state.installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(state.installedSnap) &&
+            !shouldDisplayReconnectButton(state.installedSnap)
+          }
+        />
         <Card
           content={{
             title: 'Send Hello message',

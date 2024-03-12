@@ -1,13 +1,13 @@
 {
   "version": "0.1.0",
-  "description": "An example Snap written in TypeScript.",
-  "proposedName": "TypeScript Example",
+  "description": "BitMask Wallet, Your Gateway to DeepWeb3 on Bitcoin.",
+  "proposedName": "BitMask Snap",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+    "url": "https://github.com/diba-io/Bitmask-Snap/tree/main/packages/snap"
   },
   "source": {
-    "shasum": "2bESy3OoG4KUWYDDnd51hVbx5QbLPawNvQ6VmLvMM14=",
+    "shasum": "us/8rGr20M90VQwzSnDDNwLeT2DU0L0/e7s3qvBLz/k=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
