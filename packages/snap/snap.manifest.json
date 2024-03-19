@@ -21,7 +21,16 @@
     "endowment:rpc": {
       "dapps": true,
       "snaps": false
-    }
+    },
+    "snap_manageState": {},
+    "endowment:page-home": {},
+    "endowment:lifecycle-hooks": {},
+    "snap_getBip32Entropy": [
+      {
+        "path": ["m", "44'", "3'"],
+        "curve": "secp256k1"
+      }
+    ]
   },
   "manifestVersion": "0.1"
 }

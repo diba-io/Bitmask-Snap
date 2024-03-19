@@ -82,10 +82,13 @@ export const onUserInput: OnUserInputHandler = async ({ id, event }) => {
       // ------------ While on Name Page
       // case 'formName_btnNext': {
       //   const errors = await validateForm(id, 'formName');
+
       //   if (errors.length == 0) {
             // if no errors we can go to the next showForm_GetDate(id);
       //     await showForm_GetDate(id);
       //   } else {
+
+            // if errors then reload same form and show errors, do not go forward
       //     await showForm_GetName(id, errors);
       //   }
       //   break;
