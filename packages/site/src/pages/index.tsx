@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+
 import styled from 'styled-components';
 
 import {
@@ -5,6 +7,8 @@ import {
   InstallFlaskButton,
   ReconnectButton,
   SendHelloButton,
+  SignMessageButton,
+  CreateBitmaskWalletButton,
   Card,
 } from '../components';
 import { defaultSnapOrigin } from '../config';
@@ -13,8 +17,14 @@ import {
   useInvokeSnap,
   useMetaMaskContext,
   useRequestSnap,
+  MetaMaskContext,
 } from '../hooks';
-import { isLocalSnap, shouldDisplayReconnectButton } from '../utils';
+import { 
+  createBitmaskWallet, 
+  isLocalSnap, 
+  shouldDisplayReconnectButton,
+  signMessage,
+} from '../utils';
 
 const Container = styled.div`
   display: flex;
@@ -101,6 +111,8 @@ const ErrorMessage = styled.div`
 `;
 
 const Index = () => {
+  //const [state, dispatch] = useMetaMaskContext();
+
   const { error } = useMetaMaskContext();
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
   const requestSnap = useRequestSnap();
@@ -112,6 +124,26 @@ const Index = () => {
 
   const handleSendHelloClick = async () => {
     await invokeSnap({ method: 'hello' });
+  };
+
+  const handleSignMessageClick = async () => {
+    try {
+      await signMessage();
+    } catch (error) {
+      console.error(error);
+      //dispatch({ type: MetamaskActions.SetError, payload: error });
+    }
+  };
+
+  const handleCreateBitmaskWalletClick = async () => {
+    try {
+      await createBitmaskWallet();
+      //await invokeSnap({ method: 'home' });
+     // await onHomePage();
+     } catch (error) {
+       console.error(error);
+    //   dispatch({ type: MetamaskActions.SetError, payload: error });
+     }
   };
 
   return (
@@ -179,6 +211,42 @@ const Index = () => {
             button: (
               <SendHelloButton
                 onClick={handleSendHelloClick}
+                disabled={!installedSnap}
+              />
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Sign Message',
+            description: 'Display Signature Insights in MetaMask.',
+            button: (
+              <SignMessageButton
+                onClick={handleSignMessageClick}
+                disabled={!installedSnap}
+              />
+            ),
+          }}
+          disabled={!installedSnap}
+          fullWidth={
+            isMetaMaskReady &&
+            Boolean(installedSnap) &&
+            !shouldDisplayReconnectButton(installedSnap)
+          }
+        />
+        <Card
+          content={{
+            title: 'Create Bitmask Wallet',
+            description: 'Create Wallet with seed',
+            button: (
+              <CreateBitmaskWalletButton
+                onClick={handleCreateBitmaskWalletClick}
                 disabled={!installedSnap}
               />
             ),

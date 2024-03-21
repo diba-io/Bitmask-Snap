@@ -1,13 +1,13 @@
 {
   "version": "0.1.0",
-  "description": "An example Snap written in TypeScript.",
-  "proposedName": "TypeScript Example",
+  "description": "BitMask Wallet, Your Portal to DeepWeb3 on Bitcoin.",
+  "proposedName": "Bitmask Snap",
   "repository": {
     "type": "git",
     "url": "https://github.com/MetaMask/template-snap-monorepo.git"
   },
   "source": {
-    "shasum": "5uOenJcHyfgksfMlyWEJE0PZiQDIChkbzuaM0N2nX7k=",
+    "shasum": "NkwtNUsHJ+boHCUq55q8g2jilzbC5tnVvokBMKdNRsk=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -27,7 +27,11 @@
     "endowment:lifecycle-hooks": {},
     "snap_getBip32Entropy": [
       {
-        "path": ["m", "44'", "3'"],
+        "path": [
+          "m",
+          "44'",
+          "3'"
+        ],
         "curve": "secp256k1"
       }
     ]
