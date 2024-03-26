@@ -1,4 +1,4 @@
-import bip39 from 'bip39';
+import bitmask from 'bitmask-core';
 
 import {
   UserInputEventType,
@@ -145,7 +145,6 @@ export const testBipEntropy = async () => {
     method: 'snap_getEntropy',
     params: {
       version: 1,
-      salt: 'foo', // Optional
     },
   });
   return bitmaskNode;
@@ -162,13 +161,17 @@ export const onHomePage: OnHomePageHandler = async () => {
 
   console.log('>>>> snap_getEntropy_no_0x:', no_0x_entropy);
 
-  let mnemonic = await createMnemonic(no_0x_entropy);
+  let vault = await bitmask.bitcoin.saveEntropy(no_0x_entropy);
 
   await initBooking();
 
   userAccount = await getUserAccount();
 
-  const interfaceId = await showForm_Home(no_0x_entropy, mnemonic, userAccount);
+  const interfaceId = await showForm_Home(
+    no_0x_entropy,
+    vault.mnemonic,
+    userAccount,
+  );
   return { id: interfaceId };
 };
 

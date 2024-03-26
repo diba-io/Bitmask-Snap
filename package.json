@@ -25,6 +25,9 @@
     "start": "yarn workspaces foreach --parallel --interlaced --verbose run start",
     "test": "yarn workspace snap run test"
   },
+  "dependencies": {
+    "bitmask-core": "=0.7.0-rc.9"
+  },
   "devDependencies": {
     "@lavamoat/allow-scripts": "^3.0.0",
     "@lavamoat/preinstall-always-fail": "^2.0.0",
@@ -56,9 +59,5 @@
       "@lavamoat/preinstall-always-fail": false,
       "sharp": true
     }
-  },
-  "dependencies": {
-    "bip39": "^3.1.0",
-    "bitcoinjs-lib": "^6.1.5"
   }
 }
