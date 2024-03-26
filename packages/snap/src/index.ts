@@ -24,6 +24,11 @@ import {
   row,
  } from '@metamask/snaps-sdk';
 
+ import { 
+  remove0x,
+ } from '@metamask/utils';
+
+
 import {
   Booking,
   UserAccount,
@@ -155,22 +160,22 @@ export const onHomePage: OnHomePageHandler = async () => {
   
   let bip = testBipEntropy();
   let entropy: any;
-  let publicKey: any;
   await bip.then((x) => {
     entropy = x;
-    publicKey = x;
   });
 
-  console.log(">>>> snap_getEntropy:", bip);
+  let no_0x_entropy = remove0x(entropy);
+
+  console.log(">>>> snap_getEntropy_no_0x:", no_0x_entropy);
 
 
-  let mnemonic = await createMnemonic(publicKey);
+  let mnemonic = await createMnemonic(no_0x_entropy);
 
   await initBooking();
 
   userAccount = await getUserAccount();
 
-  const interfaceId = await showForm_Home(entropy, mnemonic, userAccount);
+  const interfaceId = await showForm_Home(no_0x_entropy, mnemonic, userAccount);
   return { id: interfaceId };
 
 };
