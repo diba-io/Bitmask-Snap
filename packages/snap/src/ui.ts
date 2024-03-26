@@ -60,7 +60,7 @@ import {
         ui: panel([
           row("Define your Wallet", text('Pg: 1 of 5')),
 
-          text(`Entropy/Public Key`),
+          text(`Entropy/Seed Phrase`),
           form({
             name: 'formName',
             children: [

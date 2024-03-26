@@ -118,6 +118,8 @@ export const createMnemonic = async (entropy: string) => {
 let mnemonic = "null";
 try {    
   // BIP39 MAY NOT BE BROWSER SAFE FORM
+  //export declare function entropyToMnemonic(entropy: Buffer | string, wordlist?: string[]): string;
+
   //mnemonic = bip39.entropyToMnemonic(entropy); // Ensure this is valid entropy
   mnemonic = "happy go lucky clown wishy washy scum bag dart car mac burger"; // Ensure this is valid entropy
 
