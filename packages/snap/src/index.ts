@@ -10,6 +10,8 @@ import {
   MethodNotFoundError,
   UnsupportedMethodError,
   ParseError,
+  UnauthorizedError,
+  LimitExceededError,
  } from '@metamask/snaps-sdk';
 import { 
   panel, 
@@ -120,40 +122,19 @@ export const testBip  = async () => {
 export const createMemonic = async (privateKey: string) => {
     if (privateKey !== null) {
     let entropy = "";
-    entropy = bip39.entropyToMnemonic(privateKey); // 256 bits
-    console.log("EntropyTo Memonic:", entropy);
-    return entropy;
-  }
-
-  throw new ParseError();
+      let get_entropy = bip39.entropyToMnemonic(privateKey); // 256 bits
+      if(get_entropy === null) {
+        console.log("EntropyTo Mnemonic:", entropy);
+        entropy = get_entropy;
+      }
+      return entropy;
+    } else {
+        throw new LimitExceededError();
+    }
+  
 };
 
-// export const createMemonic = async (privateKey: string) => {
-//     // const mnemonic = bip39.entropyToMnemonic(privateKey);
-//     // console.log("----->>>>> Mnemonic:", mnemonic);
-
-//         // Generate random entropy
-//   const entropy = bip39.generateMnemonic(); // 256 bits
-//    console.log("EntropyTo Memonic:", entropy);
-
-//   //  const bitmaskNode = await snap.request({
-//   //   method: 'snap_getBip32Entropy',
-//   //   params: {
-//   //     // Must be specified exactly in the manifest
-//   //     path: ['m', "44'", "3'"],
-//   //     curve: 'secp256k1',
-//   //   },
-//   // });
-//   // return bitmaskNode;
-
-//     // Convert entropy to mnemonic (you can also directly generate a mnemonic without generating entropy first)
-//     // const mnemonic = bip39.entropyToMnemonic(entropy);
-//     // console.log("Mnemonic:", mnemonic);
-
-// }
-
 export const onHomePage: OnHomePageHandler = async () => {
-  
   
   let bip = testBip();
   let privateKey: any;
@@ -161,19 +142,12 @@ export const onHomePage: OnHomePageHandler = async () => {
   bip.then((x) => {
     privateKey = x.privateKey;
     publicKey = x.publicKey;
-    // console.log("PRIVATE KEY: ", privateKey);
-    // console.log("PUBLIC KEY: ", publicKey);
   });
 
-  // console.log("OUTER private key: ", privateKey);
-  // console.log("OUTER public key: ", publicKey);
   let mnemonic = createMemonic(privateKey);
-
+  //let mnemonic = "yes mnemonic";
 
   await initBooking();
-
-  // const formValue: Booking = {"publicKey": "testValue"};
-  // await updateBooking(formValue);
 
   userAccount = await getUserAccount();
 
