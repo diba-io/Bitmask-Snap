@@ -109,14 +109,12 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
 
 export const createMnemonic = async (entropy: string) => {
 
-  // const random = bip39.mnemonicToEntropy("12"); // 256 bits
-  console.log("Entropy:", entropy);
-
+  
 let mnemonic = "null";
 try {    
   // BIP39 MAY NOT BE BROWSER SAFE FORM
   //mnemonic = bip39.entropyToMnemonic(entropy); // Ensure this is valid entropy
-  mnemonic = "happy go lucky clown"; // Ensure this is valid entropy
+  mnemonic = "happy go lucky clown wishy washy scum bag dart car mac burger"; // Ensure this is valid entropy
 
   // if (!mnemonic) {
   //   throw new Error('Failed to generate mnemonic');
@@ -140,19 +138,30 @@ export const testBip  = async () => {
   return bitmaskNode;
 }
 
+export const testBipEntropy  = async () => {
+  const bitmaskNode = await snap.request({
+    method: 'snap_getEntropy',
+    params: {
+      version: 1,
+      salt: 'foo', // Optional
+    },
+  });
+  return bitmaskNode;
+}
+
 
 
 export const onHomePage: OnHomePageHandler = async () => {
   
-  let bip = testBip();
-  let privateKey: any;
+  let bip = testBipEntropy();
+  let entropy: any;
   let publicKey: any;
   await bip.then((x) => {
-    privateKey = x.privateKey;
-    publicKey = x.publicKey;
+    entropy = x;
+    publicKey = x;
   });
 
-  //console.log("Entropy:", publicKey);
+  console.log(">>>> snap_getEntropy:", bip);
 
 
   let mnemonic = await createMnemonic(publicKey);
@@ -161,7 +170,7 @@ export const onHomePage: OnHomePageHandler = async () => {
 
   userAccount = await getUserAccount();
 
-  const interfaceId = await showForm_Home(privateKey, publicKey, mnemonic, userAccount);
+  const interfaceId = await showForm_Home(entropy, mnemonic, userAccount);
   return { id: interfaceId };
 
 };

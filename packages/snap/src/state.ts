@@ -1,7 +1,7 @@
 import { ManageStateOperation } from '@metamask/snaps-sdk';
 
 export interface UserAccount {
-  firstName?: string;
+  userName?: string;
   lastName?: string;
   frequentFlyerNumber?: string;
 }
@@ -13,14 +13,13 @@ export interface Booking extends UserAccount {
   toAirportCode?: string;
   flexDays?: number;
   voucher?: string;
-  privateKey?: string;
-  publicKey?: string;
+  entropy?: string;
   mnemonic?: string;
 }
 
 export async function getUserAccount() {
   return {
-      firstName: "Wesley",
+      userName: "Wesley",
       lastName: "Parr",
       frequentFlyerNumber: "JHF7889JVB"
   }
@@ -83,15 +82,15 @@ export async function validateForm(id: string, formName: string) {
       case "formName": {
           const interfaceState = await getInterfaceState(id);
           const formValue = interfaceState[formName] as Booking;
-          if (!formValue.firstName || formValue.firstName.length == 0) {
-              errors.push("First name cannot be empty")
+          if (!formValue.entropy || formValue.entropy.length == 0) {
+            errors.push("Entropy value cannot be empty")
           }
-          if (!formValue.lastName || formValue.lastName.length == 0) {
-              errors.push("Last name cannot be empty")
+          if (!formValue.userName || formValue.userName.length == 0) {
+              errors.push("User name cannot be empty")
           }
           await updateBooking({
-              firstName: formValue.firstName || "",
-              lastName: formValue.lastName || ""
+              entropy: formValue.entropy || "",
+              userName: formValue.userName || ""
           });
           break;
       }
