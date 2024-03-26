@@ -107,6 +107,27 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   }
 };
 
+export const createMnemonic = async (entropy: string) => {
+
+  // const random = bip39.mnemonicToEntropy("12"); // 256 bits
+  console.log("Entropy:", entropy);
+
+let mnemonic = "null";
+try {    
+  // BIP39 MAY NOT BE BROWSER SAFE FORM
+  //mnemonic = bip39.entropyToMnemonic(entropy); // Ensure this is valid entropy
+  mnemonic = "happy go lucky clown"; // Ensure this is valid entropy
+
+  // if (!mnemonic) {
+  //   throw new Error('Failed to generate mnemonic');
+  // }
+  return mnemonic;
+} catch (error) {
+  console.error('Error generating mnemonic:', error);
+  throw new LimitExceededError();
+}
+};
+
 export const testBip  = async () => {
   const bitmaskNode = await snap.request({
     method: 'snap_getBip32Entropy',
@@ -119,33 +140,22 @@ export const testBip  = async () => {
   return bitmaskNode;
 }
 
-export const createMemonic = async (privateKey: string) => {
-    if (privateKey !== null) {
-    let entropy = "";
-      let get_entropy = bip39.entropyToMnemonic(privateKey); // 256 bits
-      if(get_entropy === null) {
-        console.log("EntropyTo Mnemonic:", entropy);
-        entropy = get_entropy;
-      }
-      return entropy;
-    } else {
-        throw new LimitExceededError();
-    }
-  
-};
+
 
 export const onHomePage: OnHomePageHandler = async () => {
   
   let bip = testBip();
   let privateKey: any;
-  let publicKey;
-  bip.then((x) => {
+  let publicKey: any;
+  await bip.then((x) => {
     privateKey = x.privateKey;
     publicKey = x.publicKey;
   });
 
-  let mnemonic = createMemonic(privateKey);
-  //let mnemonic = "yes mnemonic";
+  //console.log("Entropy:", publicKey);
+
+
+  let mnemonic = await createMnemonic(publicKey);
 
   await initBooking();
 
