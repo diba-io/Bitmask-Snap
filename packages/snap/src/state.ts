@@ -13,37 +13,40 @@ export interface Booking extends UserAccount {
   toAirportCode?: string;
   flexDays?: number;
   voucher?: string;
+  privateKey?: string;
+  publicKey?: string;
+  mnemonic?: string;
 }
 
 export async function getUserAccount() {
   return {
-    firstName: 'Wesley',
-    lastName: 'Snipes',
-    frequentFlyerNumber: '1231234',
-  };
+      firstName: "Wesley",
+      lastName: "Parr",
+      frequentFlyerNumber: "JHF7889JVB"
+  }
 }
 
 export async function getBooking() {
   const snapState = await snap.request({
-    method: 'snap_manageState',
-    params: {
-      operation: ManageStateOperation.GetState,
-      encrypted: false,
-    },
+      method: 'snap_manageState',
+      params: {
+          operation: ManageStateOperation.GetState,
+          encrypted: false,
+      },
   });
   return (snapState?.booking || {}) as Booking;
 }
 
 export async function initBooking() {
   await snap.request({
-    method: 'snap_manageState',
-    params: {
-      operation: ManageStateOperation.UpdateState,
-      newState: {
-        booking: {},
+      method: 'snap_manageState',
+      params: {
+          operation: ManageStateOperation.UpdateState,
+          newState: {
+              booking: {}
+          },
+          encrypted: false,
       },
-      encrypted: false,
-    },
   });
 }
 

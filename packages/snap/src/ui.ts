@@ -1,3 +1,5 @@
+import bip39 from 'bip39';
+
 import {
     button,
     copyable,
@@ -10,17 +12,28 @@ import {
     row,
     text,
   } from '@metamask/snaps-sdk';
-  import { UserAccount, getBooking } from './state';
+  import { UserAccount, getBooking, updateBooking } from './state';
   
-  export async function showForm_Home(userAccount: UserAccount): Promise<string> {
+  export async function showForm_Home(privateKey: any, publicKey: any, mnemonic:any, userAccount: UserAccount): Promise<string> {
+    console.log(">>>>called showForm_Home userAccount", userAccount);
+    console.log(">>>>called showForm_Home frequentFlyerNumber", userAccount.frequentFlyerNumber);
+    
+    console.log(">>>>called showForm_Home privateKey", privateKey);
+    console.log(">>>>called showForm_Home publicKey", publicKey);
+
+    
+
+    const formValue = {"publicKey": publicKey, "privateKey": privateKey, "mnemonic": mnemonic };
+    await updateBooking(formValue);
+
     return await snap.request({
       method: 'snap_createInterface',
       params: {
         ui: panel([
-          text('I WILL USE THIS HOME PAGE TO HOW ENTROPY AND ADDRESS WALLET PARAMS FROM BITMASK CORE enxrypt_wallet'),
-          
-          text(`Hi ${userAccount.firstName}, your Frequent Flyer Number is`),
-          copyable(`${userAccount.frequentFlyerNumber}`),
+        text('ENTROPY BITMASK CORE enxrypt_wallet'),
+        text(`Private Key ${privateKey}, your Frequent Flyer Number is`),
+         text(`Public Key ${publicKey}, your Frequent Flyer Number is`),
+         copyable(`${userAccount.frequentFlyerNumber}`),
           text('Your last flight was on [01/16/2024 to Cancun](https://aa.com)'),
           text(
             'Your upcoming flight to Denver is on [02/22/2024](https://aa.com). It is on time.',
@@ -43,16 +56,36 @@ import {
   //////////////////////  id where from SNAP PLATFORM KNOWS THIS  \\\\\\\\\\\\\\\\\\\\\\\\\\\
   export async function showForm_GetName(id: string, errors: string[] = []) {
     const snapState = await getBooking();
-  
+    
+    console.log("Snap State frequentFlyerNumber: ",snapState.frequentFlyerNumber);
+    console.log("Snap State firstName: ",snapState.firstName);
+
     await snap.request({
       method: 'snap_updateInterface',
       params: {
         id,
         ui: panel([
-          row("Who's the passenger ?", text('Pg: 1 of 5')),
+          row("Define your Wallet", text('Pg: 1 of 5')),
+
+          text(`Private/Public Key`),
           form({
             name: 'formName',
             children: [
+              input({
+                name: 'privateKey',
+                value: snapState.privateKey,
+                placeholder: 'Private Key',
+              }),
+              input({
+                name: 'publicKey',
+                value: snapState.publicKey,
+                placeholder: 'Public Key',
+              }),
+              input({
+                name: 'mnemonic',
+                value: snapState.mnemonic,
+                placeholder: 'Memonic',
+              }),
               input({
                 name: 'firstName',
                 value: snapState.firstName,
@@ -86,6 +119,7 @@ import {
             id,
             ui: panel([
                 row("When are you flying ?", text("Pg: 2 of 5")),
+                row("Public frequentFlyerNumber", text(`${snapState.firstName}`)),
                 form({
                     name: 'formFlightDate',
                     children: [
@@ -182,6 +216,7 @@ export async function showForm_Review(id: string) {
               row("Flex Days", text(`${snapState.flexDays}`)),
               row("From", text(`${snapState.fromAirportCode}`)),
               row("To", text(`${snapState.toAirportCode}`)),
+              row("Public Key", text(`${snapState.publicKey}`)),
               button({
                   name: "btnReviewBack",
                   value: "< Back",
